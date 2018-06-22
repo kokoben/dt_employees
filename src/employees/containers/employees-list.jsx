@@ -15,7 +15,7 @@ class EmployeesList extends Component {
       return (
         <Spin
           size="large"
-          tip="Loading..."
+          tip="Loading employees..."
         />
       );
     }

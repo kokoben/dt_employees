@@ -4,15 +4,15 @@ import { ConnectedRouter } from 'react-router-redux';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { history } from './store';
-import App from './App';
+import App from './app/components/App';
 import NotFound from './not-found';
-import './App.css';
-import './index.css';
+import './style/App.css';
+import './style/index.css';
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div>
+      <div className="App">
         <Switch>
           <Route exact path="/" component={App} />
           <Route path="*" component={NotFound} />
