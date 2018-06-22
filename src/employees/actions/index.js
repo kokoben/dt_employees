@@ -6,3 +6,6 @@ export const setEmployees = (page, pageSize) => ({
   pageSize,
 });
 
+export const setFilter = filter => ({
+  filter,
+});

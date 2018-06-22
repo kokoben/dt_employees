@@ -13,8 +13,18 @@ export const employees = (state = null, action) => {
       return state;
   }
 };
+
+export const filter = (state = 'ALL', action) => {
+  switch (action.type) {
+    case actions.FILTER_SET:
+      return action.filter;
+    default:
+      return state;
+  }
+};
 /* eslint-enable */
 
 export default combineReducers({
   employees,
+  filter,
 });

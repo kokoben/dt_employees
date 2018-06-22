@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { List } from 'antd';
+import { List, Spin } from 'antd';
 import { setEmployees } from '../actions';
 
 class EmployeesList extends Component {
@@ -11,7 +11,12 @@ class EmployeesList extends Component {
   }
 
   render() {
-    if (!this.props.employees) return null;
+    if (!this.props.employees) {
+      return (
+        <Spin tip="Loading..." />
+      );
+    }
+
     return (
       <List
         dataSource={this.props.employees}
