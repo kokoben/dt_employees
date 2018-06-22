@@ -5,7 +5,7 @@ import * as actions from './actions/types';
 export const employees = (state = null, action) => {
   switch (action.type) {
     case actions.EMPLOYEES_SET_SUCCESS:
-      return action.response;
+      return action.list;
     case actions.EMPLOYEES_SET_FAIL:
       console.log(action.message);
       break;

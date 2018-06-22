@@ -6,8 +6,18 @@ import { getEmployees } from './api-calls';
 // workers
 function* setEmployeesAsync(action) {
   try {
-    const response = yield call(axios.get, getEmployees(action.page, action.pageSize));
-    yield put({ type: actions.EMPLOYEES_SET_SUCCESS, response });
+    // get entire list of employees for pagination.
+    let list = [];
+    let { page } = action;
+    let response = yield call(axios.get, getEmployees(page, action.pageSize));
+    console.log(response);
+    while (response.data.length > 0) {
+      console.log('poop');
+      list = [...list, ...response.data];
+      page += 1;
+      response = yield call(axios.get, getEmployees(page, action.pageSize));
+    }
+    yield put({ type: actions.EMPLOYEES_SET_SUCCESS, list });
   } catch (e) {
     console.log('employees_set failed!');
     yield put({ type: actions.EMPLOYEES_SET_FAIL, message: e.message });

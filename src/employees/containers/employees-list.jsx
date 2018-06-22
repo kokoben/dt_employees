@@ -7,14 +7,14 @@ import { setEmployees } from '../actions';
 
 class EmployeesList extends Component {
   componentDidMount() {
-    this.props.setEmployees(1, 100);
+    this.props.setEmployees(1, 100000);
   }
 
   render() {
     if (!this.props.employees) return null;
     return (
       <List
-        dataSource={this.props.employees.data}
+        dataSource={this.props.employees}
         renderItem={item => (
           <List.Item
             key={item.id}
@@ -33,7 +33,7 @@ class EmployeesList extends Component {
 /* eslint-disable react/forbid-prop-types */
 EmployeesList.propTypes = {
   setEmployees: PropTypes.func.isRequired,
-  employees: PropTypes.object.isRequired,
+  employees: PropTypes.array.isRequired,
 };
 /* eslint-enable */
 
