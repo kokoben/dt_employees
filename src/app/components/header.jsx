@@ -14,6 +14,9 @@ const FullMenu = () => (
       <Menu.Item key="/">
         <Link to="/">Employees</Link>
       </Menu.Item>
+      <Menu.Item key="/add">
+        <Link to="/add">Add</Link>
+      </Menu.Item>
     </Menu>
   </Layout.Header>
 );
