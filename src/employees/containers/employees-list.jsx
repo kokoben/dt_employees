@@ -13,7 +13,10 @@ class EmployeesList extends Component {
   render() {
     if (!this.props.employees) {
       return (
-        <Spin tip="Loading..." />
+        <Spin
+          size="large"
+          tip="Loading..."
+        />
       );
     }
 
