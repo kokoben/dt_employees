@@ -11,17 +11,31 @@ class EmployeesList extends Component {
   }
 
   render() {
+    if (!this.props.employees) return null;
     return (
-      <div>
-        poop list
-      </div>
+      <List
+        dataSource={this.props.employees.data}
+        renderItem={item => (
+          <List.Item
+            key={item.id}
+          >
+            <List.Item.Meta
+              title={item.name}
+              description={item.job_titles}
+            />
+          </List.Item>
+        )}
+      />
     );
   }
 }
 
+/* eslint-disable react/forbid-prop-types */
 EmployeesList.propTypes = {
   setEmployees: PropTypes.func.isRequired,
+  employees: PropTypes.object.isRequired,
 };
+/* eslint-enable */
 
 const mapStateToProps = state => ({
   employees: state.employees.employees,
