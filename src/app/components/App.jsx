@@ -1,17 +1,17 @@
 import React from 'react';
 import { Layout } from 'antd';
-import Header from './header';
+import Sider from './sider';
 import Content from './content';
 import Footer from './footer';
 
 const App = () => (
-  <div>
-    <Layout>
-      <Header />
+  <Layout>
+    <Sider />
+    <Layout style={{ marginLeft: 200 }}>
       <Content />
       <Footer />
     </Layout>
-  </div>
+  </Layout>
 );
 
 export default App;

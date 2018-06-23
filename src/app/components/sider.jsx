@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import { slide as Slide } from 'react-burger-menu';
 
 const FullMenu = () => (
-  <Layout.Header className="menu-full">
+  <Layout.Sider
+    style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}
+    className="menu-full"
+  >
     <Menu
       theme="dark"
-      mode="horizontal"
       defaultSelectedKeys={['/']}
       style={{ lineHeight: '64px' }}
     >
@@ -18,7 +20,7 @@ const FullMenu = () => (
         <Link to="/add">Add</Link>
       </Menu.Item>
     </Menu>
-  </Layout.Header>
+  </Layout.Sider>
 );
 
 const Header = () => (

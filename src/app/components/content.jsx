@@ -5,7 +5,9 @@ import EmployeesList from '../../employees/containers/employees-list';
 import EmployeeDetail from '../../employee/components/employee-detail';
 
 const Content = () => (
-  <Layout.Content>
+  <Layout.Content
+    style={{ minHeight: '100vh', margin: '24px 16px 0', overflow: 'initial', background: '#fff' }}
+  >
     <main>
       <Switch>
         <Route exact path="/" component={EmployeesList} />
