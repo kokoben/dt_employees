@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { List, Spin } from 'antd';
 import Filter from './filter';
 import { setEmployees } from '../actions';
+import FilteredEmployeesSelector from '../selectors/filtered-employees';
 
 class EmployeesList extends Component {
   componentDidMount() {
@@ -25,7 +26,11 @@ class EmployeesList extends Component {
       <div>
         <Filter />
         <List
-          dataSource={this.props.employees}
+          // if no filter is selected, render entire list of employees
+          // otherwise, only render filtered employees
+          dataSource={this.props.filter === 'ALL' ?
+            this.props.employees : this.props.filteredEmployees
+          }
           renderItem={item => (
             <List.Item
               key={item.id}
@@ -44,13 +49,17 @@ class EmployeesList extends Component {
 
 /* eslint-disable react/forbid-prop-types */
 EmployeesList.propTypes = {
-  setEmployees: PropTypes.func.isRequired,
   employees: PropTypes.array.isRequired,
+  setEmployees: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+  filteredEmployees: PropTypes.array.isRequired,
 };
 /* eslint-enable */
 
 const mapStateToProps = state => ({
   employees: state.employees.employees,
+  filter: state.employees.filter,
+  filteredEmployees: FilteredEmployeesSelector(state),
 });
 
 const mapDispatchToProps = dispatch => (

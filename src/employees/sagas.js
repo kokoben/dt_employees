@@ -10,9 +10,7 @@ function* setEmployeesAsync(action) {
     let list = [];
     let { page } = action;
     let response = yield call(axios.get, getEmployees(page, action.pageSize));
-    console.log(response);
     while (response.data.length > 0) {
-      console.log('poop');
       list = [...list, ...response.data];
       page += 1;
       response = yield call(axios.get, getEmployees(page, action.pageSize));

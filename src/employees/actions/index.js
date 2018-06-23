@@ -7,5 +7,6 @@ export const setEmployees = (page, pageSize) => ({
 });
 
 export const setFilter = filter => ({
+  type: actions.FILTER_SET,
   filter,
 });

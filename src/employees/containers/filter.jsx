@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Select } from 'antd';
+import { setFilter } from '../actions';
 
 const Option = Select.Option;
 
@@ -14,6 +15,7 @@ class Filter extends Component {
   }
 
   handleChange(value) {
+    this.props.setFilter(value);
   }
 
   render() {
@@ -23,42 +25,42 @@ class Filter extends Component {
         defaultValue={this.props.filter}
         onChange={this.handleChange}
       >
-        <Option value="all">ALL</Option>
-        <Option value="police">POLICE</Option>
-        <Option value="fire">FIRE</Option>
-        <Option value="streets">STREETS & SAN</Option>
-        <Option value="oemc">OEMC</Option>
-        <Option value="water">WATER MGMNT</Option>
-        <Option value="aviation">AVIATION</Option>
-        <Option value="transport">TRANSPORTN</Option>
-        <Option value="library">PUBLIC LIBRARY</Option>
-        <Option value="general">GENERAL SERVICES</Option>
-        <Option value="family">FAMILY & SUPPORT</Option>
-        <Option value="finance">FINANCE</Option>
-        <Option value="health">HEALTH</Option>
-        <Option value="city">CITY COUNCIL</Option>
-        <Option value="law">LAW</Option>
-        <Option value="buildings">BUILDINGS</Option>
-        <Option value="community">COMMUNITY DEVELOPMENT</Option>
-        <Option value="business">BUSINESS AFFAIRS</Option>
-        <Option value="copa">COPA</Option>
-        <Option value="election">BOARD OF ELECTION</Option>
-        <Option value="doit">DoIT</Option>
-        <Option value="procurement">PROCUREMENT</Option>
-        <Option value="inspector">INSPECTOR GEN</Option>
-        <Option value="mayors">MAYORS OFFICE</Option>
-        <Option value="city">CITY CLERK</Option>
-        <Option value="animal">ANIMAL CONTRL</Option>
-        <Option value="human">HUMAN RESOURCES</Option>
-        <Option value="cultural">CULTURAL AFFAIRS</Option>
-        <Option value="budget">BUDGET & MGMT</Option>
-        <Option value="admin">ADMIN HEARNG</Option>
-        <Option value="disabilities">DISABILITIES</Option>
-        <Option value="treasurer">TREASURER</Option>
-        <Option value="human">HUMAN RELATIONS</Option>
-        <Option value="ethics">BOARD OF ETHICS</Option>
-        <Option value="polboard">POLICE BOARD</Option>
-        <Option value="license">LICENSE APPL COMM</Option>
+        <Option value="ALL">ALL</Option>
+        <Option value="POLICE">POLICE</Option>
+        <Option value="FIRE">FIRE</Option>
+        <Option value="STREETS & SAN">STREETS & SAN</Option>
+        <Option value="OEMC">OEMC</Option>
+        <Option value="WATER MGMNT">WATER MGMNT</Option>
+        <Option value="AVIATION">AVIATION</Option>
+        <Option value="TRANSPORTN">TRANSPORTN</Option>
+        <Option value="PUBLIC LIBRARY">PUBLIC LIBRARY</Option>
+        <Option value="GENERAL SERVICES">GENERAL SERVICES</Option>
+        <Option value="FAMILY & SUPPORT">FAMILY & SUPPORT</Option>
+        <Option value="FINANCE">FINANCE</Option>
+        <Option value="HEALTH">HEALTH</Option>
+        <Option value="CITY COUNCIL">CITY COUNCIL</Option>
+        <Option value="LAW">LAW</Option>
+        <Option value="BUILDINGS">BUILDINGS</Option>
+        <Option value="COMMUNITY DEVELOPMENT">COMMUNITY DEVELOPMENT</Option>
+        <Option value="BUSINESS AFFAIRS">BUSINESS AFFAIRS</Option>
+        <Option value="COPA">COPA</Option>
+        <Option value="BOARD OF ELECTION">BOARD OF ELECTION</Option>
+        <Option value="DoIT">DoIT</Option>
+        <Option value="PROCUREMENT">PROCUREMENT</Option>
+        <Option value="INSPECTOR GEN">INSPECTOR GEN</Option>
+        <Option value="MAYORS OFFICE">MAYORS OFFICE</Option>
+        <Option value="CITY CLERK">CITY CLERK</Option>
+        <Option value="ANIMAL CONTRL">ANIMAL CONTRL</Option>
+        <Option value="HUMAN RESOURCES">HUMAN RESOURCES</Option>
+        <Option value="CULTURAL AFFAIRS">CULTURAL AFFAIRS</Option>
+        <Option value="BUDGET & MGMT">BUDGET & MGMT</Option>
+        <Option value="ADMIN HEARNG">ADMIN HEARNG</Option>
+        <Option value="DISABILITIES">DISABILITIES</Option>
+        <Option value="TREASURER">TREASURER</Option>
+        <Option value="HUMAN RELATIONS">HUMAN RELATIONS</Option>
+        <Option value="BOARD OF ETHICS">BOARD OF ETHICS</Option>
+        <Option value="POLICE BOARD">POLICE BOARD</Option>
+        <Option value="LICENSE APPL COMM">LICENSE APPL COMM</Option>
       </Select>
     );
   }
@@ -66,6 +68,7 @@ class Filter extends Component {
 
 Filter.propTypes = {
   filter: PropTypes.string.isRequired,
+  setFilter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -74,6 +77,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
+    setFilter,
   }, dispatch)
 );
 
