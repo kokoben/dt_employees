@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { List, Spin } from 'antd';
+import Filter from './filter';
 import { setEmployees } from '../actions';
 
 class EmployeesList extends Component {
@@ -21,19 +22,22 @@ class EmployeesList extends Component {
     }
 
     return (
-      <List
-        dataSource={this.props.employees}
-        renderItem={item => (
-          <List.Item
-            key={item.id}
-          >
-            <List.Item.Meta
-              title={item.name}
-              description={item.job_titles}
-            />
-          </List.Item>
-        )}
-      />
+      <div>
+        <Filter />
+        <List
+          dataSource={this.props.employees}
+          renderItem={item => (
+            <List.Item
+              key={item.id}
+            >
+              <List.Item.Meta
+                title={item.name}
+                description={item.job_titles}
+              />
+            </List.Item>
+          )}
+        />
+      </div>
     );
   }
 }
