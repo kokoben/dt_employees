@@ -16,6 +16,7 @@ class EmployeesList extends Component {
 
   handleClick(employee) {
     // set selected employee state to populate detail view
+    console.log('blah: ', employee);
     this.props.setEmployee(employee);
   }
 
@@ -23,6 +24,7 @@ class EmployeesList extends Component {
     if (!this.props.employees) {
       return (
         <Spin
+          style={{ marginTop: '30px' }}
           size="large"
           tip="Loading employees..."
         />
@@ -40,7 +42,7 @@ class EmployeesList extends Component {
           }
           renderItem={item => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <Link to={`/${item.id}`}>
+            <Link to={`/employee/${item.id}`}>
               <List.Item
                 onClick={() => this.handleClick(item)}
                 key={item.id}
@@ -76,6 +78,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
+    setEmployee,
     setEmployees,
   }, dispatch)
 );

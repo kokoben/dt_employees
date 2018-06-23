@@ -15,6 +15,7 @@ const Root = ({ store }) => (
       <div className="App">
         <Switch>
           <Route exact path="/" component={App} />
+          <Route exact path="/employee/:id" component={App} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>

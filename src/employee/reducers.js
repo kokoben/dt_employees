@@ -4,11 +4,8 @@ import * as actions from './actions/types';
 /* eslint-disable consistent-return */
 export const employee = (state = null, action) => {
   switch (action.type) {
-    case actions.EMPLOYEE_SET_SUCCESS:
-      return action.list;
-    case actions.EMPLOYEE_SET_FAIL:
-      console.log(action.message);
-      break;
+    case actions.EMPLOYEE_SET:
+      return action.employee;
     default:
       return state;
   }

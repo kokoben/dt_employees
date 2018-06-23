@@ -2,16 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { List, Card } from 'antd';
+import { List } from 'antd';
 
 
 const EmployeeDetail = (props) => {
   const employeeData = [
-    { title: 'Employee ID', content: props.employee.id },
-    { title: 'key', content: props.employee.name },
-    { title: 'Job Title', content: props.employee.job_titles },
-    { title: 'Annual Salary', content: props.employee.employee_annual_salary },
-    { key: 'Department', content: props.employee.department },
+    { title: 'Name:', content: props.employee.name },
+    { title: 'Employee ID:', content: props.employee.id },
+    { title: 'Job Title:', content: props.employee.job_titles },
+    { title: 'Annual Salary:', content: props.employee.employee_annual_salary },
+    { title: 'Department:', content: props.employee.department },
   ];
 
   return (
@@ -19,7 +19,10 @@ const EmployeeDetail = (props) => {
       dataSource={employeeData}
       renderItem={item => (
         <List.Item key={item.title}>
-          <Card title={item.title}>{item.content}</Card>
+          <List.Item.Meta
+            title={item.title}
+            description={item.content}
+          />
         </List.Item>
       )}
     />

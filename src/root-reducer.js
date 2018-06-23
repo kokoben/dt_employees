@@ -7,6 +7,6 @@ import EmployeeFormReducers from './employee-form/reducers';
 export default combineReducers({
   routing: routerReducer,
   employees: EmployeesReducers,
-  detail: DetailReducers,
+  employee: DetailReducers,
   form: EmployeeFormReducers,
 });
