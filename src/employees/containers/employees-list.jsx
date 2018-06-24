@@ -6,12 +6,11 @@ import { Link } from 'react-router-dom';
 import { List, Spin } from 'antd';
 import Filter from './filter';
 import { setEmployees } from '../actions';
-import { setEmployee } from '../../employee/actions';
 import FilteredEmployeesSelector from '../selectors/filtered-employees';
 
 class EmployeesList extends Component {
   componentDidMount() {
-    this.props.setEmployees(1, 100000);
+    if (!this.props.employees) this.props.setEmployees(1, 100000);
   }
 
   render() {

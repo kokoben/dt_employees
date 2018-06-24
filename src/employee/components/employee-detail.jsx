@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { List } from 'antd';
+import { List, Button } from 'antd';
+import { Link } from 'react-router-dom';
 import { setEmployee } from '../actions';
 
 class EmployeeDetail extends Component {
@@ -22,7 +23,10 @@ class EmployeeDetail extends Component {
 
     return (
       <div>
-        <h1>Employee Information</h1>
+        <Link to="/">
+          <Button style={{ float: 'left', margin: '10px' }} type="primary" icon="left">Back</Button>
+        </Link>
+        <h1 style={{ display: 'inline-block' }}>Employee Information</h1>
         <List
           dataSource={employeeData}
           renderItem={item => (
