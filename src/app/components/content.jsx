@@ -9,7 +9,7 @@ const Content = () => (
   <Layout.Content
     style={{
       minHeight: '100vh',
-      margin: '24px 16px 0',
+      margin: '16px 16px 0',
       overflow: 'initial',
       background: '#fff',
     }}

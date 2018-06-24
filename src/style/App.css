@@ -25,3 +25,11 @@
 .ant-list-item-content {
   justify-content: center;
 }
+
+.focused {
+  background: lightblue;
+}
+
+:focus {
+  outline-color: lightblue;
+}
