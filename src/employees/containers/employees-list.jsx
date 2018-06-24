@@ -14,12 +14,6 @@ class EmployeesList extends Component {
     this.props.setEmployees(1, 100000);
   }
 
-  handleClick(employee) {
-    // set selected employee state to populate detail view
-    console.log('blah: ', employee);
-    this.props.setEmployee(employee);
-  }
-
   render() {
     if (!this.props.employees) {
       return (
@@ -44,7 +38,6 @@ class EmployeesList extends Component {
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
             <Link to={`/employee/${item.id}`}>
               <List.Item
-                onClick={() => this.handleClick(item)}
                 key={item.id}
               >
                 <List.Item.Meta
@@ -62,8 +55,7 @@ class EmployeesList extends Component {
 
 /* eslint-disable react/forbid-prop-types */
 EmployeesList.propTypes = {
-  employees: PropTypes.array.isRequired,
-  setEmployee: PropTypes.func.isRequired,
+  employees: PropTypes.array,
   setEmployees: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
   filteredEmployees: PropTypes.array.isRequired,
@@ -78,7 +70,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
-    setEmployee,
     setEmployees,
   }, dispatch)
 );

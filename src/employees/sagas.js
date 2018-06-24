@@ -17,7 +17,7 @@ function* setEmployeesAsync(action) {
     }
     yield put({ type: actions.EMPLOYEES_SET_SUCCESS, list });
   } catch (e) {
-    console.log('employees_set failed!');
+    console.log('employees_set failed');
     yield put({ type: actions.EMPLOYEES_SET_FAIL, message: e.message });
   }
 }
