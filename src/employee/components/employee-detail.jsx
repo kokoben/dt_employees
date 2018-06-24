@@ -13,6 +13,9 @@ class EmployeeDetail extends Component {
 
   render() {
     if (!this.props.employee) return null;
+    if (this.props.employee.title === "not found") return (
+      <div>Employee not found</div>
+    );
     const employeeData = [
       { title: 'Name:', content: this.props.employee.name },
       { title: 'Employee ID:', content: this.props.employee.id },

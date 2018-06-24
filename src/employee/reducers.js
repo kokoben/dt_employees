@@ -7,8 +7,7 @@ export const employee = (state = null, action) => {
     case actions.EMPLOYEE_SET_SUCCESS:
       return action.employee;
     case actions.EMPLOYEE_SET_FAIL:
-      console.log(action.message);
-      break;
+      return { title: "not found" };
     default:
       return state;
   }

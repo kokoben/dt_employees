@@ -16,16 +16,20 @@ class EmployeesList extends Component {
   render() {
     if (!this.props.employees) {
       return (
-        <Spin
-          style={{ marginTop: '30px' }}
-          size="large"
-          tip="Loading employees..."
-        />
+        <div>
+          <h1>City of Chicago Employee Directory</h1>
+          <Spin
+            style={{ marginTop: '20px' }}
+            size="large"
+            tip="Loading employees..."
+          />
+        </div>
       );
     }
 
     return (
       <div>
+        <h1>City of Chicago Employee Directory</h1>
         <Filter />
         <List
           // if no filter is selected, render entire list of employees
