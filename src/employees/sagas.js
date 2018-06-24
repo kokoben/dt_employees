@@ -17,6 +17,15 @@ function* setEmployeesAsync(action) {
       response = yield call(axios.get, getEmployees(page, action.pageSize));
     }
 
+    // get all departments
+    const departments = ['ALL'];
+    for (let i = 0; i < list.length; i += 1) {
+      if (departments.indexOf(list[i].department) === -1) {
+        departments.push(list[i].department);
+      }
+    }
+
+    yield put({ type: actions.DEPARTMENTS_SET, departments });
     yield put({ type: actions.EMPLOYEES_SET_SUCCESS, list });
   } catch (e) {
     console.log('employees_set failed');

@@ -24,7 +24,17 @@ export const filter = (state = 'ALL', action) => {
 };
 /* eslint-enable */
 
+export const departments = (state = null, action) => {
+  switch (action.type) {
+    case actions.DEPARTMENTS_SET:
+      return action.departments;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   employees,
   filter,
+  departments,
 });
