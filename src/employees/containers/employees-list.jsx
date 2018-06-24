@@ -37,12 +37,11 @@ class EmployeesList extends Component {
           dataSource={this.props.filter === 'ALL' ?
             this.props.employees : this.props.filteredEmployees
           }
+          pagination={{ pageSize: 100, position: 'both' }}
           renderItem={item => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
             <Link to={`/employee/${item.id}`}>
-              <List.Item
-                key={item.id}
-              >
+              <List.Item key={item.id}>
                 <List.Item.Meta
                   title={item.name}
                   description={item.job_titles}

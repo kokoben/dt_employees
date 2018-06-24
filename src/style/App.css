@@ -17,3 +17,7 @@
   font-size: large;
 }
 
+.ant-list-pagination {
+  text-align: center;
+  margin-top: 10px;
+}

@@ -13,9 +13,12 @@ class EmployeeDetail extends Component {
 
   render() {
     if (!this.props.employee) return null;
-    if (this.props.employee.title === "not found") return (
-      <div>Employee not found</div>
-    );
+    if (this.props.employee.title === 'not found') {
+      return (
+        <div>Employee not found</div>
+      );
+    }
+
     const employeeData = [
       { title: 'Name:', content: this.props.employee.name },
       { title: 'Employee ID:', content: this.props.employee.id },
@@ -27,9 +30,16 @@ class EmployeeDetail extends Component {
     return (
       <div>
         <Link to="/">
-          <Button style={{ float: 'left', margin: '10px' }} type="primary" icon="left">Back</Button>
+          <Button
+            style={{ float: 'left', margin: '10px' }}
+            size="small"
+            type="primary"
+            icon="left"
+          >
+            Back
+          </Button>
         </Link>
-        <h1 style={{ display: 'inline-block' }}>Employee Information</h1>
+        <h1 style={{ clear: 'left' }}>Employee Information</h1>
         <List
           dataSource={employeeData}
           renderItem={item => (
