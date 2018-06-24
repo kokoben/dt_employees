@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { List, Spin } from 'antd';
 import Filter from './filter';
-import { setEmployees } from '../actions';
+import { setEmployees, setCursor } from '../actions';
 import FilteredEmployeesSelector from '../selectors/filtered-employees';
 
 class EmployeesList extends Component {
@@ -14,13 +14,13 @@ class EmployeesList extends Component {
     super(props);
 
     this.state = {
-      cursor: 0,
       id: null,
       redirect: false,
     };
 
     this.listSection = null;
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -37,14 +37,13 @@ class EmployeesList extends Component {
   }
 
   handleKeyDown(e) {
-    const { cursor } = this.state;
-    const { filteredEmployees } = this.props;
-    if (e.keyCode === 38 && cursor > 0) {
+    const { cursor, filteredEmployees } = this.props;
+    if (e.keyCode === 38 && this.props.cursor > 0) {
       // key up
-      this.setState(prevState => ({ cursor: prevState.cursor - 1 }));
+      this.props.setCursor(cursor - 1);
     } else if (e.keyCode === 40 && cursor < filteredEmployees.length) {
       // key down
-      this.setState(prevState => ({ cursor: prevState.cursor + 1 }));
+      this.props.setCursor(cursor + 1);
     } else if (e.keyCode === 13) {
       // enter
       // get employee id using cursor position,
@@ -56,8 +55,15 @@ class EmployeesList extends Component {
     }
   }
 
+  handleClick(employee) {
+    console.log('clicking');
+    const index = this.props.filteredEmployees.indexOf(employee);
+    this.props.setCursor(index);
+  }
+
   render() {
-    const { cursor, id, redirect } = this.state;
+    const { id, redirect } = this.state;
+    const { cursor } = this.props;
 
     if (!this.props.employees) {
       return (
@@ -96,10 +102,14 @@ class EmployeesList extends Component {
           renderItem={item => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
             <List.Item
+              onClick={() => this.handleClick(item)}
               className={cursor === this.props.filteredEmployees.indexOf(item) ? 'focused' : null}
               key={item.id}
             >
-              <Link to={`/employee/${item.id}`}>
+              <Link
+                onClick={() => this.handleClick(item)}
+                to={`/employee/${item.id}`}
+              >
                 <List.Item.Meta
                   title={item.name}
                   description={item.job_titles}
@@ -116,6 +126,7 @@ class EmployeesList extends Component {
 /* eslint-disable react/forbid-prop-types */
 EmployeesList.propTypes = {
   employees: PropTypes.array,
+  cursor: PropTypes.number.isRequired,
   setEmployees: PropTypes.func.isRequired,
   filteredEmployees: PropTypes.array,
 };
@@ -123,12 +134,14 @@ EmployeesList.propTypes = {
 
 const mapStateToProps = state => ({
   employees: state.employees.employees,
+  cursor: state.employees.cursor,
   filteredEmployees: FilteredEmployeesSelector(state),
 });
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     setEmployees,
+    setCursor,
   }, dispatch)
 );
 

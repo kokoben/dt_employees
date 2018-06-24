@@ -10,3 +10,8 @@ export const setFilter = filter => ({
   type: actions.FILTER_SET,
   filter,
 });
+
+export const setCursor = cursor => ({
+  type: actions.CURSOR_SET,
+  cursor,
+});

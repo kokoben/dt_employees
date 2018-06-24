@@ -22,6 +22,15 @@ export const filter = (state = 'ALL', action) => {
       return state;
   }
 };
+
+export const cursor = (state = 0, action) => {
+  switch (action.type) {
+    case actions.CURSOR_SET:
+      return action.cursor;
+    default:
+      return state;
+  }
+};
 /* eslint-enable */
 
 export const departments = (state = null, action) => {
@@ -36,5 +45,6 @@ export const departments = (state = null, action) => {
 export default combineReducers({
   employees,
   filter,
+  cursor,
   departments,
 });
