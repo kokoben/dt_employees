@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 const FormItem = Form.Item;
 
@@ -17,14 +18,16 @@ const formItemLayout = {
 const EmployeeForm = () => {
   return (
     <div style={{ width: '50%' }}>
-      <Button
-        style={{ float: 'left', margin: '10px' }}
-        size="small"
-        type="primary"
-        icon="left"
-      >
-        Back
-      </Button>
+      <Link to="/">
+        <Button
+          style={{ float: 'left', margin: '10px' }}
+          size="small"
+          type="primary"
+          icon="left"
+        >
+          Back
+        </Button>
+      </Link>
       <h1 style={{ clear: 'left' }}>Add Employee</h1>
       <Form style={{ marginLeft: '10px' }}>
         <FormItem

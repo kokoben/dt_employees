@@ -40,14 +40,14 @@ class EmployeesList extends Component {
           pagination={{ pageSize: 100, position: 'both' }}
           renderItem={item => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <Link to={`/employee/${item.id}`}>
-              <List.Item key={item.id}>
+            <List.Item key={item.id}>
+              <Link to={`/employee/${item.id}`}>
                 <List.Item.Meta
                   title={item.name}
                   description={item.job_titles}
                 />
-              </List.Item>
-            </Link>
+              </Link>
+            </List.Item>
           )}
         />
       </div>
