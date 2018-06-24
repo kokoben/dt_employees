@@ -24,7 +24,6 @@ class EmployeesList extends Component {
   }
 
   componentDidMount() {
-    console.log('mounted employeeslist');
     if (this.listSection) {
       this.listSection.focus();
     }
@@ -32,7 +31,6 @@ class EmployeesList extends Component {
   }
 
   componentDidUpdate() {
-    console.log('componentdidupdate in employees');
     if (this.listSection) {
       this.listSection.focus();
     }
@@ -59,7 +57,6 @@ class EmployeesList extends Component {
   }
 
   render() {
-    console.log('rendering employees');
     const { cursor, id, redirect } = this.state;
 
     if (!this.props.employees) {
@@ -90,6 +87,7 @@ class EmployeesList extends Component {
         <h1>City of Chicago Employee Directory</h1>
         <Filter />
         <List
+          size="small"
           header="Employees:"
           // if no filter is selected, render entire list of employees
           // otherwise, only render filtered employees
@@ -97,7 +95,10 @@ class EmployeesList extends Component {
           pagination={{ pageSize: 100, position: 'both' }}
           renderItem={item => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <List.Item className={cursor === this.props.filteredEmployees.indexOf(item) ? 'focused' : null} key={item.id}>
+            <List.Item
+              className={cursor === this.props.filteredEmployees.indexOf(item) ? 'focused' : null}
+              key={item.id}
+            >
               <Link to={`/employee/${item.id}`}>
                 <List.Item.Meta
                   title={item.name}

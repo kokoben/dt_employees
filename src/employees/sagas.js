@@ -10,11 +10,13 @@ function* setEmployeesAsync(action) {
     let list = [];
     let { page } = action;
     let response = yield call(axios.get, getEmployees(page, action.pageSize));
+
     while (response.data.length > 0) {
       list = [...list, ...response.data];
       page += 1;
       response = yield call(axios.get, getEmployees(page, action.pageSize));
     }
+
     yield put({ type: actions.EMPLOYEES_SET_SUCCESS, list });
   } catch (e) {
     console.log('employees_set failed');
