@@ -25,8 +25,10 @@ class EmployeeDetail extends Component {
     this.props.setEmployee(this.props.match.params.id);
   }
 
-  componentDidUpdate() {
-    console.log('employee componentdidupdate');
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.props.setEmployee(this.props.match.params.id);
+    }
     if (this.detailSection) {
       this.detailSection.focus();
     }
@@ -41,6 +43,8 @@ class EmployeeDetail extends Component {
 
   render() {
     const { back, prev, next } = this.state;
+    const prevEmployeeId = parseInt(this.props.match.params.id) - 1;
+    const nextEmployeeId = parseInt(this.props.match.params.id) + 1;
 
     if (!this.props.employee) return null;
     if (back) {
@@ -89,21 +93,25 @@ class EmployeeDetail extends Component {
             </List.Item>
           )}
         />
-        <Button
-          type="primary"
-          icon="left"
-          size="small"
-          style={{ float: 'left', margin: '10px' }}
-        >
-          Previous
-        </Button>
-        <Button
-          type="primary"
-          size="small"
-          style={{ float: 'right', margin: '10px' }}
-        >
-          Next <Icon type="right" />
-        </Button>
+        <Link to={`/employee/${prevEmployeeId}`}>
+          <Button
+            type="primary"
+            icon="left"
+            size="small"
+            style={{ float: 'left', margin: '10px' }}
+          >
+            Previous
+          </Button>
+        </Link>
+        <Link to={`/employee/${nextEmployeeId}`}>
+          <Button
+            type="primary"
+            size="small"
+            style={{ float: 'right', margin: '10px' }}
+          >
+            Next <Icon type="right" />
+          </Button>
+        </Link>
       </div>
     );
   }
