@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
-import { List, Button } from 'antd';
+import { List, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { setEmployee } from '../actions';
 
@@ -89,6 +89,21 @@ class EmployeeDetail extends Component {
             </List.Item>
           )}
         />
+        <Button
+          type="primary"
+          icon="left"
+          size="small"
+          style={{ float: 'left', margin: '10px' }}
+        >
+          Previous
+        </Button>
+        <Button
+          type="primary"
+          size="small"
+          style={{ float: 'right', margin: '10px' }}
+        >
+          Next <Icon type="right" />
+        </Button>
       </div>
     );
   }
