@@ -21,6 +21,7 @@ class EmployeesList extends Component {
     this.listSection = null;
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
@@ -38,16 +39,18 @@ class EmployeesList extends Component {
 
   handleKeyDown(e) {
     const { cursor, filteredEmployees } = this.props;
-    if (e.keyCode === 38 && this.props.cursor > 0) {
+    if (e.keyCode === 38 && cursor % 100 !== 0) {
       // key up
+      // don't let user scroll into previous page.
       this.props.setCursor(cursor - 1);
-    } else if (e.keyCode === 40 && cursor < filteredEmployees.length) {
+    } else if (e.keyCode === 40 && cursor < filteredEmployees.length && cursor % 100 !== 99) {
       // key down
+      // don't let user scroll past current list page.
       this.props.setCursor(cursor + 1);
     } else if (e.keyCode === 13) {
       // enter
       // get employee id using cursor position,
-      // and use it to direct user to employee detail page
+      // and use it to direct user to employee detail page.
       this.setState({
         id: filteredEmployees[cursor].id,
         redirect: true,
@@ -59,6 +62,10 @@ class EmployeesList extends Component {
     console.log('clicking');
     const index = this.props.filteredEmployees.indexOf(employee);
     this.props.setCursor(index);
+  }
+
+  handlePageChange(page, pageSize) {
+    this.props.setCursor((page - 1) * pageSize);
   }
 
   render() {
@@ -98,7 +105,12 @@ class EmployeesList extends Component {
           // if no filter is selected, render entire list of employees
           // otherwise, only render filtered employees
           dataSource={this.props.filteredEmployees}
-          pagination={{ pageSize: 100, position: 'both' }}
+          pagination={{
+            onChange: this.handlePageChange,
+            size: 'small',
+            pageSize: 100,
+            position: 'both',
+          }}
           renderItem={item => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
             <List.Item
@@ -128,6 +140,7 @@ EmployeesList.propTypes = {
   employees: PropTypes.array,
   cursor: PropTypes.number.isRequired,
   setEmployees: PropTypes.func.isRequired,
+  setCursor: PropTypes.func.isRequired,
   filteredEmployees: PropTypes.array,
 };
 /* eslint-enable */
