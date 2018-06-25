@@ -19,6 +19,7 @@ class EmployeesList extends Component {
     };
 
     this.listSection = null;
+    this.employeeRow = null;
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -29,6 +30,11 @@ class EmployeesList extends Component {
       this.listSection.focus();
     }
     if (!this.props.employees) this.props.setEmployees(1, 100000);
+    if (this.props.cursor !== 0 && this.props.cursor !== 1 && this.employeeRow) {
+      // when the user returns from employee detail view, scroll to focused employee row
+      this.employeeRow.scrollIntoView();
+      window.scrollBy(0, -50);
+    }
   }
 
   componentDidUpdate() {
@@ -43,10 +49,16 @@ class EmployeesList extends Component {
       // key up
       // don't let user scroll into previous page.
       this.props.setCursor(cursor - 1);
+      this.employeeRow.scrollIntoView();
+      window.scrollBy(0, -50);
     } else if (e.keyCode === 40 && cursor < filteredEmployees.length && cursor % 100 !== 99) {
       // key down
       // don't let user scroll past current list page.
       this.props.setCursor(cursor + 1);
+      if (cursor > 0 && cursor % 1 === 0) {
+        // make the viewport follow the cursor
+        this.employeeRow.scrollIntoView();
+      }
     } else if (e.keyCode === 13) {
       // enter
       // get employee id using cursor position,
@@ -66,6 +78,7 @@ class EmployeesList extends Component {
 
   handlePageChange(page, pageSize) {
     this.props.setCursor((page - 1) * pageSize);
+    // eslint-disable-next-line no-undef
     window.scrollTo(0, 0);
   }
 
@@ -114,21 +127,27 @@ class EmployeesList extends Component {
           }}
           renderItem={item => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <List.Item
-              onClick={() => this.handleClick(item)}
-              className={cursor === this.props.filteredEmployees.indexOf(item) ? 'focused' : null}
-              key={item.id}
+            <div
+              ref={(node) => {
+                if (cursor === this.props.filteredEmployees.indexOf(item)) this.employeeRow = node;
+              }}
             >
-              <Link
+              <List.Item
                 onClick={() => this.handleClick(item)}
-                to={`/employee/${item.id}`}
+                className={cursor === this.props.filteredEmployees.indexOf(item) ? 'focused' : null}
+                key={item.id}
               >
-                <List.Item.Meta
-                  title={item.name}
-                  description={item.job_titles}
-                />
-              </Link>
-            </List.Item>
+                <Link
+                  onClick={() => this.handleClick(item)}
+                  to={`/employee/${item.id}`}
+                >
+                  <List.Item.Meta
+                    title={item.name}
+                    description={item.job_titles}
+                  />
+                </Link>
+              </List.Item>
+            </div>
           )}
         />
       </div>
