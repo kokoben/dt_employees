@@ -66,6 +66,7 @@ class EmployeesList extends Component {
 
   handlePageChange(page, pageSize) {
     this.props.setCursor((page - 1) * pageSize);
+    window.scrollTo(0, 0);
   }
 
   render() {
