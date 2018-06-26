@@ -55,20 +55,25 @@ class EmployeeDetail extends Component {
       // up key directs user to previous employee
       e.preventDefault();
       this.setState({ prev: true });
-      this.props.setCursor(cursor - 1);
 
+      // track whether list goes to previous page
       if (cursor > 0 && cursor % 100 === 0) {
         this.props.setCurrentPage(currentPage - 1);
       }
+      this.props.setCursor(cursor - 1);
+
     } else if (e.keyCode === 40) {
       // down key directs user to next employee
       e.preventDefault();
       this.setState({ next: true });
-      this.props.setCursor(cursor + 1);
 
+      // track whether list goes to next page.
       if (cursor > 0 && cursor % 99 === 0) {
         this.props.setCurrentPage(currentPage + 1);
       }
+
+      this.props.setCursor(cursor + 1);
+
     }
   }
 
