@@ -26,6 +26,14 @@ class EmployeeDetail extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { prev, next } = this.state;
+
+    if (prev) {
+      this.setState({ prev: false });
+    }
+    if (next) {
+      this.setState({ next: false });
+    }
     if (this.props.match.params.id !== prevProps.match.params.id) {
       this.props.setEmployee(this.props.match.params.id);
     }
@@ -36,9 +44,17 @@ class EmployeeDetail extends Component {
 
   handleKeyDown(e) {
     if (e.keyCode === 13) {
-      // enter key. direct user back to employee directory
+      // enter key directs user back to employee directory
       this.setState({ back: true });
-    } else if (e.keyCode === 38) {}
+    } else if (e.keyCode === 38) {
+      // up key directs user to previous employee
+      e.preventDefault();
+      this.setState({ prev: true });
+    } else if (e.keyCode === 40) {
+      // down key directs user to next employee
+      e.preventDefault();
+      this.setState({ next: true });
+    }
   }
 
   render() {
@@ -49,6 +65,12 @@ class EmployeeDetail extends Component {
     if (!this.props.employee) return null;
     if (back) {
       return <Redirect to="/" />;
+    }
+    if (prev) {
+      return <Redirect to={`/employee/${prevEmployeeId}`} />;
+    }
+    if (next) {
+      return <Redirect to={`/employee/${nextEmployeeId}`} />;
     }
 
     if (this.props.employee.title === 'not found') {
