@@ -52,55 +52,62 @@ class EmployeeDetail extends Component {
       // enter key directs user back to employee directory
       this.setState({ back: true });
     } else if (e.keyCode === 38) {
-      // up key directs user to previous employee
       e.preventDefault();
-      this.setState({ prev: true });
 
       // track whether list goes to previous page
       if (cursor > 0 && cursor % 100 === 0) {
         this.props.setCurrentPage(currentPage - 1);
       }
+
+      // up key directs user to previous employee
+      this.setState({ prev: true });
       this.props.setCursor(cursor - 1);
 
     } else if (e.keyCode === 40) {
-      // down key directs user to next employee
       e.preventDefault();
-      this.setState({ next: true });
 
       // track whether list goes to next page.
-      if (cursor > 0 && cursor % 99 === 0) {
+      if (cursor > 0 && cursor % 100 === 99) {
         this.props.setCurrentPage(currentPage + 1);
       }
 
+      // down key directs user to next employee
+      this.setState({ next: true });
       this.props.setCursor(cursor + 1);
-
     }
   }
 
   handlePrevClick() {
     const { cursor, currentPage } = this.props;
-    this.props.setCursor(cursor - 1);
 
+    // track whether list goes to previous page.
     if (cursor > 0 && cursor % 100 === 0) {
       this.props.setCurrentPage(currentPage - 1);
     }
+
+    this.props.setCursor(cursor - 1);
   }
 
   handleNextClick() {
     const { cursor, currentPage } = this.props;
-    this.props.setCursor(cursor + 1);
 
-    if (cursor > 0 && cursor % 99 === 0) {
+    // track whether list goes to next page.
+    if (cursor > 0 && cursor % 100 === 99) {
       this.props.setCurrentPage(currentPage + 1);
     }
+
+    this.props.setCursor(cursor + 1);
   }
 
   render() {
+    console.log('cursor pos: ', this.props.cursor);
+    console.log('currentPage: ', this.props.currentPage);
     const { back, prev, next } = this.state;
     const prevEmployeeId = parseInt(this.props.match.params.id) - 1;
     const nextEmployeeId = parseInt(this.props.match.params.id) + 1;
 
     if (!this.props.employee) return null;
+
     if (back) {
       return <Redirect to="/" />;
     }
