@@ -31,6 +31,15 @@ export const cursor = (state = 0, action) => {
       return state;
   }
 };
+
+export const currentPage = (state = 1, action) => {
+  switch (action.type) {
+    case actions.CURRENT_PAGE_SET:
+      return action.currentPage;
+    default:
+      return state;
+  }
+}
 /* eslint-enable */
 
 export const departments = (state = null, action) => {
@@ -46,5 +55,6 @@ export default combineReducers({
   employees,
   filter,
   cursor,
+  currentPage,
   departments,
 });

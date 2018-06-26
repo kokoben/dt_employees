@@ -15,3 +15,8 @@ export const setCursor = cursor => ({
   type: actions.CURSOR_SET,
   cursor,
 });
+
+export const setCurrentPage = currentPage => ({
+  type: actions.CURRENT_PAGE_SET,
+  currentPage,
+});

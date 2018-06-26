@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { List, Spin } from 'antd';
 import Filter from './filter';
-import { setEmployees, setCursor } from '../actions';
+import { setEmployees, setCursor, setCurrentPage } from '../actions';
 import FilteredEmployeesSelector from '../selectors/filtered-employees';
 
 class EmployeesList extends Component {
@@ -21,7 +21,7 @@ class EmployeesList extends Component {
     this.listSection = null;
     this.employeeRow = null;
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleRowClick = this.handleRowClick.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
@@ -37,28 +37,51 @@ class EmployeesList extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (this.listSection) {
       this.listSection.focus();
+    }
+
+    // if going to next page, scroll to top.
+    if (prevProps.cursor % 100 === 99 &&
+      this.props.cursor === prevProps.cursor + 1
+    ) {
+      window.scrollTo(0, 0);
+    }
+
+    // if going to previous page (unless on the first page), scroll to last row.
+    if (
+      prevProps.cursor > 0 &&
+      prevProps.cursor % 100 === 0 &&
+      this.props.cursor === prevProps.cursor - 1
+    ) {
+      this.employeeRow.scrollIntoView();
     }
   }
 
   handleKeyDown(e) {
-    const { cursor, filteredEmployees } = this.props;
-    if (e.keyCode === 38 && cursor % 100 !== 0) {
+    const { cursor, filteredEmployees, currentPage } = this.props;
+    if (e.keyCode === 38 && cursor > 0) {
       // key up
-      // don't let user scroll into previous page.
+      // if on first page row and not the first page, go to previous page.
+      if (cursor > 0 && cursor % 100 === 0) {
+        this.props.setCurrentPage(currentPage - 1);
+      }
+
       this.props.setCursor(cursor - 1);
+      // make viewport follow cursor
       this.employeeRow.scrollIntoView();
       window.scrollBy(0, -50);
-    } else if (e.keyCode === 40 && cursor < filteredEmployees.length && cursor % 100 !== 99) {
+    } else if (e.keyCode === 40 && cursor < filteredEmployees.length) {
       // key down
-      // don't let user scroll past current list page.
-      this.props.setCursor(cursor + 1);
-      if (cursor > 0 && cursor % 1 === 0) {
-        // make the viewport follow the cursor
-        this.employeeRow.scrollIntoView();
+      // if on last page row, go to next page.
+      if (cursor % 100 === 99) {
+        this.props.setCurrentPage(currentPage + 1);
       }
+
+      this.props.setCursor(cursor + 1);
+      // make viewport follow cursor.
+      this.employeeRow.scrollIntoView();
     } else if (e.keyCode === 13) {
       // enter
       // get employee id using cursor position,
@@ -70,8 +93,7 @@ class EmployeesList extends Component {
     }
   }
 
-  handleClick(employee) {
-    console.log('clicking');
+  handleRowClick(employee) {
     const index = this.props.filteredEmployees.indexOf(employee);
     this.props.setCursor(index);
   }
@@ -80,11 +102,13 @@ class EmployeesList extends Component {
     this.props.setCursor((page - 1) * pageSize);
     // eslint-disable-next-line no-undef
     window.scrollTo(0, 0);
+    this.props.setCurrentPage(page);
   }
 
   render() {
     const { id, redirect } = this.state;
     const { cursor } = this.props;
+    console.log('currentPage: ', this.props.currentPage);
 
     if (!this.props.employees) {
       return (
@@ -121,6 +145,7 @@ class EmployeesList extends Component {
           dataSource={this.props.filteredEmployees}
           pagination={{
             onChange: this.handlePageChange,
+            current: this.props.currentPage,
             size: 'small',
             pageSize: 100,
             position: 'both',
@@ -133,12 +158,12 @@ class EmployeesList extends Component {
               }}
             >
               <List.Item
-                onClick={() => this.handleClick(item)}
+                onClick={() => this.handleRowClick(item)}
                 className={cursor === this.props.filteredEmployees.indexOf(item) ? 'focused' : null}
                 key={item.id}
               >
                 <Link
-                  onClick={() => this.handleClick(item)}
+                  onClick={() => this.handleRowClick(item)}
                   to={`/employee/${item.id}`}
                 >
                   <List.Item.Meta
@@ -159,8 +184,10 @@ class EmployeesList extends Component {
 EmployeesList.propTypes = {
   employees: PropTypes.array,
   cursor: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
   setEmployees: PropTypes.func.isRequired,
   setCursor: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
   filteredEmployees: PropTypes.array,
 };
 /* eslint-enable */
@@ -168,6 +195,7 @@ EmployeesList.propTypes = {
 const mapStateToProps = state => ({
   employees: state.employees.employees,
   cursor: state.employees.cursor,
+  currentPage: state.employees.currentPage,
   filteredEmployees: FilteredEmployeesSelector(state),
 });
 
@@ -175,6 +203,7 @@ const mapDispatchToProps = dispatch => (
   bindActionCreators({
     setEmployees,
     setCursor,
+    setCurrentPage,
   }, dispatch)
 );
 

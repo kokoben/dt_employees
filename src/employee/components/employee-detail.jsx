@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { List, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { setEmployee } from '../actions';
+import { setCursor, setCurrentPage } from '../../employees/actions';
 
 class EmployeeDetail extends Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class EmployeeDetail extends Component {
 
     this.detailSection = null;
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handlePrevClick = this.handlePrevClick.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +46,8 @@ class EmployeeDetail extends Component {
   }
 
   handleKeyDown(e) {
+    const { cursor, currentPage } = this.props;
+
     if (e.keyCode === 13) {
       // enter key directs user back to employee directory
       this.setState({ back: true });
@@ -50,10 +55,38 @@ class EmployeeDetail extends Component {
       // up key directs user to previous employee
       e.preventDefault();
       this.setState({ prev: true });
+      this.props.setCursor(cursor - 1);
+
+      if (cursor > 0 && cursor % 100 === 0) {
+        this.props.setCurrentPage(currentPage - 1);
+      }
     } else if (e.keyCode === 40) {
       // down key directs user to next employee
       e.preventDefault();
       this.setState({ next: true });
+      this.props.setCursor(cursor + 1);
+
+      if (cursor > 0 && cursor % 99 === 0) {
+        this.props.setCurrentPage(currentPage + 1);
+      }
+    }
+  }
+
+  handlePrevClick() {
+    const { cursor, currentPage } = this.props;
+    this.props.setCursor(cursor - 1);
+
+    if (cursor > 0 && cursor % 100 === 0) {
+      this.props.setCurrentPage(currentPage - 1);
+    }
+  }
+
+  handleNextClick() {
+    const { cursor, currentPage } = this.props;
+    this.props.setCursor(cursor + 1);
+
+    if (cursor > 0 && cursor % 99 === 0) {
+      this.props.setCurrentPage(currentPage + 1);
     }
   }
 
@@ -117,6 +150,7 @@ class EmployeeDetail extends Component {
         />
         <Link to={`/employee/${prevEmployeeId}`}>
           <Button
+            onClick={this.handlePrevClick}
             type="primary"
             icon="left"
             size="small"
@@ -127,6 +161,7 @@ class EmployeeDetail extends Component {
         </Link>
         <Link to={`/employee/${nextEmployeeId}`}>
           <Button
+            onClick={this.handleNextClick}
             type="primary"
             size="small"
             style={{ float: 'right', margin: '10px' }}
@@ -144,17 +179,24 @@ EmployeeDetail.propTypes = {
   match: PropTypes.object.isRequired,
   employee: PropTypes.object,
   setEmployee: PropTypes.func.isRequired,
+  setCursor: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
 };
 /* eslint-enable */
 
 const mapStateToProps = state => ({
   employee: state.employee.employee,
+  cursor: state.employees.cursor,
+  currentPage: state.employees.currentPage,
   employees: state.employees.employees,
 });
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     setEmployee,
+    setCurrentPage,
+    setCursor,
   }, dispatch)
 );
 

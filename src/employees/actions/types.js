@@ -4,3 +4,4 @@ export const EMPLOYEES_SET_FAIL = 'EMPLOYEES_SET_FAIL';
 export const FILTER_SET = 'FILTER_SET';
 export const CURSOR_SET = 'CURSOR_SET';
 export const DEPARTMENTS_SET = 'DEPARTMENTS_SET';
+export const CURRENT_PAGE_SET = 'CURRENT_PAGE_SET';

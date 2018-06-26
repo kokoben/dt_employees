@@ -35,6 +35,5 @@ function* setEmployeesAsync(action) {
 
 // watchers
 export function* watchSetEmployees() {
-  console.log('set employees watcher running');
   yield takeEvery(actions.EMPLOYEES_SET, setEmployeesAsync);
 }
