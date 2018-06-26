@@ -2,8 +2,8 @@ import React from 'react';
 import { Layout } from 'antd';
 import { Switch, Route } from 'react-router-dom';
 import EmployeesList from '../../employees/containers/employees-list';
-import EmployeeDetail from '../../employee/components/employee-detail';
-import EmployeeForm from '../../employee-form/components/employee-form';
+import EmployeeDetail from '../../employee/containers/employee-detail';
+import EmployeeForm from '../../employee-form/containers/employee-form';
 
 const Content = () => (
   <Layout.Content
