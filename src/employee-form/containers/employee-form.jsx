@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { updateFields } from '../actions';
+import { addEmployee, updateFields } from '../actions';
 
 const FormItem = Form.Item;
 
@@ -34,7 +34,6 @@ const tailFormItemLayout = {
 
 const EmployeeForm = Form.create({
   onFieldsChange(props, changedFields) {
-    console.log('onFieldsChange', changedFields);
     props.onChange(changedFields);
   },
   mapPropsToFields(props) {
@@ -46,15 +45,17 @@ const EmployeeForm = Form.create({
       department: Form.createFormField(props.department),
     };
   },
-  onValuesChange(_, values) {
-    console.log('poop', values);
-  },
 })((props) => {
   const { getFieldDecorator } = props.form;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.form.validateFields();
+    props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('values: ', values);
+        props.onGoodSubmit(values);
+      }
+    });
   };
 
   return (
@@ -69,7 +70,7 @@ const EmployeeForm = Form.create({
         {getFieldDecorator('firstName', {
           rules: [
             { required: true, message: 'Please enter employee\'s first name.', whitespace: true },
-            { pattern: /^[a-z]+$/i, message: 'Must contain only letters and no spaces.' },
+            { pattern: /^[a-z ]+$/i, message: 'May only contain letters.' },
           ],
         })(<Input />)}
       </FormItem>
@@ -80,7 +81,7 @@ const EmployeeForm = Form.create({
         {getFieldDecorator('lastName', {
           rules: [
              { required: true, message: 'Please enter employee\'s last name.', whitespace: true },
-             { pattern: /^[a-z]+$/i, message: 'Must contain only letters and no spaces' },
+             { pattern: /^[a-z]+$/i, message: 'May only contain letters and no spaces.' },
           ],
         })(<Input />)}
       </FormItem>
@@ -90,8 +91,8 @@ const EmployeeForm = Form.create({
       >
         {getFieldDecorator('jobTitle', {
           rules: [
-             { required: true, message: 'Please enter employee\'s job title.', whitespace: true },
-             { pattern: /^[a-z]+$/i, message: 'Must contain only letters and no spaces' },
+             { required: true, message: 'Please enter employee\'s job title.' },
+             { pattern: /^[\w ]+$/g, message: 'May only contain alphanumeric characters.' },
           ],
         })(<Input />)}
       </FormItem>
@@ -145,6 +146,7 @@ class WrappedEmployeeForm extends Component {
         <EmployeeForm
           {...this.props.fields}
           onChange={this.props.updateFields}
+          onGoodSubmit={this.props.addEmployee}
         />
       </div>
     );
@@ -153,8 +155,9 @@ class WrappedEmployeeForm extends Component {
 
 /* eslint-disable react/forbid-prop-types */
 WrappedEmployeeForm.propTypes = {
+  addEmployee: PropTypes.func.isRequired,
   updateFields: PropTypes.func.isRequired,
-  fields: PropTypes.object
+  fields: PropTypes.object,
 };
 /* eslint-enable */
 
@@ -166,6 +169,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     updateFields,
+    addEmployee,
   }, dispatch)
 );
 
