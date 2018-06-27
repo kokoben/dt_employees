@@ -3,6 +3,9 @@ import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import { slide as Slide } from 'react-burger-menu';
 
+let href = window.location.href.split('/');
+href = href[3];
+
 const FullMenu = () => (
   <Layout.Sider
     style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}
@@ -10,7 +13,7 @@ const FullMenu = () => (
   >
     <Menu
       theme="dark"
-      defaultSelectedKeys={['/']}
+      defaultSelectedKeys={[`/${href}`]}
       style={{ lineHeight: '64px' }}
     >
       <Menu.Item key="/">
