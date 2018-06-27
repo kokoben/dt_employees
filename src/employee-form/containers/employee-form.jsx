@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { addEmployee, updateFields } from '../actions';
+import { setTab } from '../../app/actions';
 
 const FormItem = Form.Item;
 
@@ -135,6 +136,7 @@ class WrappedEmployeeForm extends Component {
         <Link to="/">
           <Button
             style={{ float: 'left', margin: '10px' }}
+            onClick={() => this.props.setTab('/')}
             size="small"
             type="primary"
             icon="left"
@@ -157,6 +159,7 @@ class WrappedEmployeeForm extends Component {
 WrappedEmployeeForm.propTypes = {
   addEmployee: PropTypes.func.isRequired,
   updateFields: PropTypes.func.isRequired,
+  setTab: PropTypes.func.isRequired,
   fields: PropTypes.object,
 };
 /* eslint-enable */
@@ -170,6 +173,7 @@ const mapDispatchToProps = dispatch => (
   bindActionCreators({
     updateFields,
     addEmployee,
+    setTab,
   }, dispatch)
 );
 

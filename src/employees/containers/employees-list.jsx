@@ -108,7 +108,6 @@ class EmployeesList extends Component {
   render() {
     const { id, redirect } = this.state;
     const { cursor } = this.props;
-    console.log('currentPage: ', this.props.currentPage);
 
     if (!this.props.employees) {
       return (
