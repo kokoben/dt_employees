@@ -47,7 +47,7 @@ const EmployeeForm = Form.create({
     };
   },
   onValuesChange(_, values) {
-    console.log(values);
+    console.log('poop', values);
   },
 })((props) => {
   const { getFieldDecorator } = props.form;
@@ -134,6 +134,7 @@ class WrappedEmployeeForm extends Component {
         </Link>
         <h1 style={{ clear: 'left' }}>Add Employee</h1>
         <EmployeeForm
+          {...this.props.fields}
           onChange={this.props.updateFields}
         />
       </div>
@@ -141,9 +142,12 @@ class WrappedEmployeeForm extends Component {
   }
 }
 
+/* eslint-disable react/forbid-prop-types */
 WrappedEmployeeForm.propTypes = {
   updateFields: PropTypes.func.isRequired,
+  fields: PropTypes.object.isRequired,
 };
+/* eslint-enable */
 
 
 const mapStateToProps = state => ({
