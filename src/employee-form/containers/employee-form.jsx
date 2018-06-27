@@ -51,8 +51,17 @@ const EmployeeForm = Form.create({
   },
 })((props) => {
   const { getFieldDecorator } = props.form;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.form.validateFields();
+  };
+
   return (
-    <Form style={{ marginLeft: '10px' }}>
+    <Form
+      style={{ marginLeft: '10px' }}
+      onSubmit={handleSubmit}
+    >
       <FormItem
         label="First Name"
         {...formItemLayout}
@@ -112,7 +121,7 @@ const EmployeeForm = Form.create({
         })(<Input />)}
       </FormItem>
       <FormItem {...tailFormItemLayout}>
-        <Button tabIndex="0" style={{ float: 'left' }}type="primary" htmlType="submit">Add</Button>
+        <Button tabIndex="0" style={{ float: 'left' }} type="primary" htmlType="submit">Add</Button>
       </FormItem>
     </Form>
   );
@@ -145,7 +154,7 @@ class WrappedEmployeeForm extends Component {
 /* eslint-disable react/forbid-prop-types */
 WrappedEmployeeForm.propTypes = {
   updateFields: PropTypes.func.isRequired,
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.object
 };
 /* eslint-enable */
 
