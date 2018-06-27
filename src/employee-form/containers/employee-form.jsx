@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { addEmployee, addEmployeeFirstName, updateFields } from '../actions';
+import { updateFields } from '../actions';
 
 const FormItem = Form.Item;
 
@@ -58,13 +58,10 @@ const EmployeeForm = Form.create({
         {...formItemLayout}
       >
         {getFieldDecorator('firstName', {
-          rules: [{
-            type: 'regexp',
-            required: true,
-            whitespace: true,
-            pattern: /^[a-z]+$/i,
-            message: 'Must contain only letters and no spaces.',
-          }],
+          rules: [
+            { required: true, message: 'Please enter employee\'s first name.', whitespace: true },
+            { pattern: /^[a-z]+$/i, message: 'Must contain only letters and no spaces.' },
+          ],
         })(<Input />)}
       </FormItem>
       <FormItem
@@ -72,13 +69,10 @@ const EmployeeForm = Form.create({
         {...formItemLayout}
       >
         {getFieldDecorator('lastName', {
-          rules: [{
-            type: 'regexp',
-            required: true,
-            whitespace: true,
-            pattern: /^[a-z]+$/i,
-            message: 'Must contain only letters and no spaces.',
-          }],
+          rules: [
+             { required: true, message: 'Please enter employee\'s last name.', whitespace: true },
+             { pattern: /^[a-z]+$/i, message: 'Must contain only letters and no spaces' },
+          ],
         })(<Input />)}
       </FormItem>
       <FormItem
@@ -86,13 +80,10 @@ const EmployeeForm = Form.create({
         {...formItemLayout}
       >
         {getFieldDecorator('jobTitle', {
-          rules: [{
-            type: 'regexp',
-            required: true,
-            whitespace: true,
-            pattern: /^[a-z]+$/i,
-            message: 'Must contain only letters and no spaces.',
-          }],
+          rules: [
+             { required: true, message: 'Please enter employee\'s job title.', whitespace: true },
+             { pattern: /^[a-z]+$/i, message: 'Must contain only letters and no spaces' },
+          ],
         })(<Input />)}
       </FormItem>
       <FormItem
@@ -100,13 +91,13 @@ const EmployeeForm = Form.create({
         {...formItemLayout}
       >
         {getFieldDecorator('salary', {
-          rules: [{
-            type: 'regexp',
-            required: true,
-            whitespace: true,
+          rules: [
+          { required: true, message: 'Please enter employee\'s salary.', whitespace: true },
+          {
             pattern: /^[0-9]+(\.[0-9][0-9])?$/,
-            message: 'Must contain only letters and no spaces.',
-          }],
+            message: 'Invalid amount. Must in the format: (dollar amount).(cents) Example: 19899.52',
+          },
+          ],
         })(<Input prefix="$" />)}
       </FormItem>
       <FormItem
@@ -114,13 +105,10 @@ const EmployeeForm = Form.create({
         {...formItemLayout}
       >
         {getFieldDecorator('department', {
-          rules: [{
-            type: 'regexp',
-            required: true,
-            whitespace: true,
-            pattern: /^[a-z]+$/i,
-            message: 'Must contain only letters and no spaces.',
-          }],
+          rules: [
+             { required: true, message: 'Please enter employee\'s department.', whitespace: true },
+             { pattern: /^[a-z]+$/i, message: 'Must contain only letters and no spaces' },
+          ],
         })(<Input />)}
       </FormItem>
       <FormItem {...tailFormItemLayout}>
@@ -159,12 +147,12 @@ WrappedEmployeeForm.propTypes = {
 
 
 const mapStateToProps = state => ({
+  fields: state.form.fields,
 });
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     updateFields,
-    addEmployee,
   }, dispatch)
 );
 
