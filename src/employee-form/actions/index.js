@@ -1,12 +1,11 @@
 import * as actions from './types';
 
-export const addEmployee = (first, last, title, salary, department) => ({
+export const addEmployee = fields => ({
   type: actions.EMPLOYEE_ADD,
-  info: {
-    first,
-    last,
-    title,
-    salary,
-    department,
-  },
+  payload: fields,
+});
+
+export const updateFields = fields => ({
+  type: actions.FIELDS_UPDATE,
+  fields,
 });
