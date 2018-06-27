@@ -9,12 +9,12 @@ function* addEmployeeAsync(action) {
     let name = `${action.fields.lastName}, ${action.fields.firstName}`;
     name = name.toUpperCase();
 
-    const data = {
+    const data = JSON.stringify({
       name,
       department: action.fields.department.toUpperCase(),
       employee_annual_salary: action.fields.salary,
       job_titles: action.fields.jobTitle.toUpperCase(),
-    };
+    });
 
     const response = yield call(axios.post, postEmployee(), data);
     yield put({ type: actions.EMPLOYEE_ADD_SUCCESS, response });
