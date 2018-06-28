@@ -54,7 +54,7 @@ const EmployeeForm = Form.create({
     props.form.validateFields((err, values) => {
       if (!err) {
         props.onGoodSubmit(values);
-        message.success('Employee successfully added!');
+        message.success('Employee successfully added!', 5);
         props.statusHandler();
         props.redirectHandler(true);
       }
@@ -120,7 +120,7 @@ const EmployeeForm = Form.create({
         {getFieldDecorator('department', {
           rules: [
              { required: true, message: 'Please enter employee\'s department.', whitespace: true },
-             { pattern: /^[a-z]+$/i, message: 'Must contain only letters and no spaces' },
+             { pattern: /^[a-z ]+$/i, message: 'May contain only letters.' },
           ],
         })(<Input />)}
       </FormItem>
