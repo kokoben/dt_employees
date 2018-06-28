@@ -109,10 +109,10 @@ class EmployeeDetail extends Component {
     if (back) {
       return <Redirect to="/" />;
     }
-    if (prev) {
+    if (prev && prevEmployeeId !== 0) {
       return <Redirect to={`/employee/${prevEmployeeId}`} />;
     }
-    if (next) {
+    if (next && nextEmployeeId <= this.props.employees.length) {
       return <Redirect to={`/employee/${nextEmployeeId}`} />;
     }
 
@@ -188,6 +188,7 @@ class EmployeeDetail extends Component {
 EmployeeDetail.propTypes = {
   match: PropTypes.object.isRequired,
   employee: PropTypes.object,
+  employees: PropTypes.array,
   setEmployee: PropTypes.func.isRequired,
   setCursor: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
