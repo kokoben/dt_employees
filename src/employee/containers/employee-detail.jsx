@@ -46,7 +46,7 @@ class EmployeeDetail extends Component {
   }
 
   handleKeyDown(e) {
-    const { cursor, currentPage } = this.props;
+    const { cursor, currentPage, employees } = this.props;
 
     if (e.keyCode === 13) {
       // enter key directs user back to employee directory
@@ -59,9 +59,11 @@ class EmployeeDetail extends Component {
         this.props.setCurrentPage(currentPage - 1);
       }
 
-      // up key directs user to previous employee
-      this.setState({ prev: true });
-      this.props.setCursor(cursor - 1);
+      // up key directs user to previous employee, if one exists.
+      if (cursor > 0) {
+        this.setState({ prev: true });
+        this.props.setCursor(cursor - 1);
+      }
 
     } else if (e.keyCode === 40) {
       e.preventDefault();
@@ -71,9 +73,11 @@ class EmployeeDetail extends Component {
         this.props.setCurrentPage(currentPage + 1);
       }
 
-      // down key directs user to next employee
-      this.setState({ next: true });
-      this.props.setCursor(cursor + 1);
+      // down key directs user to next employee, if one exists.
+      if (cursor < employees.length - 1) {
+        this.setState({ next: true });
+        this.props.setCursor(cursor + 1);
+      }
     }
   }
 
@@ -85,18 +89,22 @@ class EmployeeDetail extends Component {
       this.props.setCurrentPage(currentPage - 1);
     }
 
-    this.props.setCursor(cursor - 1);
+    if (cursor > 0) {
+      this.props.setCursor(cursor - 1);
+    }
   }
 
   handleNextClick() {
-    const { cursor, currentPage } = this.props;
+    const { cursor, currentPage, employees } = this.props;
 
     // track whether list goes to next page.
     if (cursor > 0 && cursor % 100 === 99) {
       this.props.setCurrentPage(currentPage + 1);
     }
 
-    this.props.setCursor(cursor + 1);
+    if (cursor < employees.length - 1) {
+      this.props.setCursor(cursor + 1);
+    }
   }
 
   render() {
@@ -187,6 +195,7 @@ class EmployeeDetail extends Component {
 /* eslint-disable react/forbid-prop-types */
 EmployeeDetail.propTypes = {
   match: PropTypes.object.isRequired,
+  cursor: PropTypes.number.isRequired,
   employee: PropTypes.object,
   employees: PropTypes.array,
   setEmployee: PropTypes.func.isRequired,

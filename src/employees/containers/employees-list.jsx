@@ -41,7 +41,6 @@ class EmployeesList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('updated component');
     if (this.props.cursor === 0) {
       window.scrollTo(0, 0);
     }
@@ -79,7 +78,7 @@ class EmployeesList extends Component {
       // make viewport follow cursor
       this.employeeRow.scrollIntoView();
       window.scrollBy(0, -50);
-    } else if (e.keyCode === 40 && cursor < filteredEmployees.length) {
+    } else if (e.keyCode === 40 && cursor < filteredEmployees.length - 1) {
       // key down
       // if on last page row, go to next page.
       if (cursor % 100 === 99) {
