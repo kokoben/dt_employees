@@ -12,7 +12,7 @@ class Burger extends Component {
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
-    this.closemenu = this.closeMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
   handleStateChange(state) {
