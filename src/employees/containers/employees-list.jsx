@@ -28,6 +28,7 @@ class EmployeesList extends Component {
   componentDidMount() {
     if (this.listSection) {
       this.listSection.focus();
+      window.scrollTo(0, 0);
     }
     if (!this.props.employees) {
       this.props.setEmployees(1, 100000);
@@ -43,6 +44,7 @@ class EmployeesList extends Component {
     console.log('updated component');
     if (this.listSection) {
       this.listSection.focus();
+      window.scrollTo(0, 0);
     }
 
     // if going to next page, scroll to top.
