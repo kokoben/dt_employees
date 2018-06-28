@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { Form, Input, Button, message } from 'antd';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { addEmployee, updateFields, updateSubmitStatus } from '../actions';
+import { addEmployee, updateFields } from '../actions';
+import { setCursor, setCurrentPage } from '../../employees/actions';
 
 const FormItem = Form.Item;
 
@@ -56,7 +57,8 @@ const EmployeeForm = Form.create({
         props.onGoodSubmit(values);
         message.success('Employee successfully added!', 5);
         props.statusHandler();
-        props.redirectHandler(true);
+        props.pageChanger(1);
+        props.cursorChanger(0);
       }
     });
   };
@@ -164,9 +166,10 @@ class WrappedEmployeeForm extends Component {
         </Link>
         <h1 style={{ clear: 'left' }}>Add Employee</h1>
         <EmployeeForm
+          pageChanger={this.props.setCurrentPage}
+          cursorChanger={this.props.setCursor}
           submitStatus={this.state.success}
           statusHandler={this.changeSubmitStatus}
-          redirectHandler={this.props.updateSubmitStatus}
           {...this.props.fields}
           onChange={this.props.updateFields}
           onGoodSubmit={this.props.addEmployee}
@@ -181,7 +184,8 @@ WrappedEmployeeForm.propTypes = {
   addEmployee: PropTypes.func.isRequired,
   updateFields: PropTypes.func.isRequired,
   fields: PropTypes.object,
-  updateSubmitStatus: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  setCursor: PropTypes.func.isRequired,
 };
 /* eslint-enable */
 
@@ -194,7 +198,8 @@ const mapDispatchToProps = dispatch => (
   bindActionCreators({
     updateFields,
     addEmployee,
-    updateSubmitStatus,
+    setCurrentPage,
+    setCursor,
   }, dispatch)
 );
 

@@ -7,7 +7,6 @@ import { Redirect } from 'react-router';
 import { List, Spin } from 'antd';
 import Filter from './filter';
 import { setEmployees, setCursor, setCurrentPage } from '../actions';
-import { updateSubmitStatus } from '../../employee-form/actions';
 import FilteredEmployeesSelector from '../selectors/filtered-employees';
 
 class EmployeesList extends Component {
@@ -110,13 +109,6 @@ class EmployeesList extends Component {
   }
 
   render() {
-    console.log('rendering');
-    /* if user added a new employee and has just been kicked back to employees list,
-    update the list. */
-    if (this.props.submitStatus) {
-      console.log("submit status changed, updating list in render");
-      this.props.updateSubmitStatus(false);
-    }
     const { id, redirect } = this.state;
     const { cursor } = this.props;
 
@@ -199,8 +191,6 @@ EmployeesList.propTypes = {
   setCursor: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   filteredEmployees: PropTypes.array,
-  updateSubmitStatus: PropTypes.func.isRequired,
-  submitStatus: PropTypes.bool.isRequired,
 };
 /* eslint-enable */
 
@@ -208,7 +198,6 @@ const mapStateToProps = state => ({
   employees: state.employees.employees,
   cursor: state.employees.cursor,
   currentPage: state.employees.currentPage,
-  submitStatus: state.form.submitStatus,
   filteredEmployees: FilteredEmployeesSelector(state),
 });
 
@@ -217,7 +206,6 @@ const mapDispatchToProps = dispatch => (
     setEmployees,
     setCursor,
     setCurrentPage,
-    updateSubmitStatus,
   }, dispatch)
 );
 

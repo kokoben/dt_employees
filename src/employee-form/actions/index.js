@@ -10,7 +10,3 @@ export const updateFields = fields => ({
   fields,
 });
 
-export const updateSubmitStatus = submitStatus => ({
-  type: actions.SUBMIT_UPDATE,
-  submitStatus,
-});
