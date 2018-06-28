@@ -7,6 +7,7 @@ import { List, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { setEmployee } from '../actions';
 import { setCursor, setCurrentPage } from '../../employees/actions';
+import FilteredEmployeesSelector from '../../employees/selectors/filtered-employees';
 
 class EmployeeDetail extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class EmployeeDetail extends Component {
   }
 
   handleKeyDown(e) {
-    const { cursor, currentPage, employees } = this.props;
+    const { cursor, currentPage, filteredEmployees } = this.props;
 
     if (e.keyCode === 13) {
       // enter key directs user back to employee directory
@@ -62,9 +63,7 @@ class EmployeeDetail extends Component {
       // up key directs user to previous employee, if one exists.
       if (cursor > 0) {
         this.setState({ prev: true });
-        this.props.setCursor(cursor - 1);
       }
-
     } else if (e.keyCode === 40) {
       e.preventDefault();
 
@@ -74,9 +73,8 @@ class EmployeeDetail extends Component {
       }
 
       // down key directs user to next employee, if one exists.
-      if (cursor < employees.length - 1) {
+      if (cursor < filteredEmployees.length - 1) {
         this.setState({ next: true });
-        this.props.setCursor(cursor + 1);
       }
     }
   }
@@ -89,38 +87,55 @@ class EmployeeDetail extends Component {
       this.props.setCurrentPage(currentPage - 1);
     }
 
+    // clicking on previous directs user to previous employee, if one exists.
     if (cursor > 0) {
       this.props.setCursor(cursor - 1);
     }
   }
 
   handleNextClick() {
-    const { cursor, currentPage, employees } = this.props;
+    const { cursor, currentPage, filteredEmployees } = this.props;
 
     // track whether list goes to next page.
     if (cursor > 0 && cursor % 100 === 99) {
       this.props.setCurrentPage(currentPage + 1);
     }
 
-    if (cursor < employees.length - 1) {
+    // clicking next directs user to next employee, if one exists.
+    if (cursor < filteredEmployees.length - 1) {
       this.props.setCursor(cursor + 1);
     }
   }
 
   render() {
     const { back, prev, next } = this.state;
-    const prevEmployeeId = parseInt(this.props.match.params.id) - 1;
-    const nextEmployeeId = parseInt(this.props.match.params.id) + 1;
+    const { cursor, filteredEmployees } = this.props;
+    let prevEmployeeId;
+    let nextEmployeeId;
+
+    if (cursor === 0) {
+      prevEmployeeId = filteredEmployees[cursor].id;
+    } else {
+      prevEmployeeId = filteredEmployees[cursor - 1].id;
+    }
+
+    if (cursor === filteredEmployees.length - 1) {
+      nextEmployeeId = filteredEmployees[cursor].id;
+    } else {
+      nextEmployeeId = filteredEmployees[cursor + 1].id;
+    }
 
     if (!this.props.employee) return null;
 
     if (back) {
       return <Redirect to="/" />;
     }
-    if (prev && prevEmployeeId !== 0) {
+    if (prev) {
+      this.props.setCursor(cursor - 1);
       return <Redirect to={`/employee/${prevEmployeeId}`} />;
     }
-    if (next && nextEmployeeId <= this.props.employees.length) {
+    if (next) {
+      this.props.setCursor(cursor + 1);
       return <Redirect to={`/employee/${nextEmployeeId}`} />;
     }
 
@@ -197,11 +212,11 @@ EmployeeDetail.propTypes = {
   match: PropTypes.object.isRequired,
   cursor: PropTypes.number.isRequired,
   employee: PropTypes.object,
-  employees: PropTypes.array,
   setEmployee: PropTypes.func.isRequired,
   setCursor: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
+  filteredEmployees: PropTypes.array,
 };
 /* eslint-enable */
 
@@ -209,7 +224,7 @@ const mapStateToProps = state => ({
   employee: state.employee.employee,
   cursor: state.employees.cursor,
   currentPage: state.employees.currentPage,
-  employees: state.employees.employees,
+  filteredEmployees: FilteredEmployeesSelector(state),
 });
 
 const mapDispatchToProps = dispatch => (
