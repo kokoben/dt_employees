@@ -42,9 +42,11 @@ class EmployeesList extends Component {
 
   componentDidUpdate(prevProps) {
     console.log('updated component');
+    if (this.props.cursor === 0) {
+      window.scrollTo(0, 0);
+    }
     if (this.listSection) {
       this.listSection.focus();
-      window.scrollTo(0, 0);
     }
 
     // if going to next page, scroll to top.
