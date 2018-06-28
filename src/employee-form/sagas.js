@@ -2,6 +2,7 @@ import axios from 'axios';
 import { put, call, takeEvery } from 'redux-saga/effects';
 import * as actions from './actions/types';
 import { postEmployee } from './api-calls';
+import { EMPLOYEES_SET } from '../employees/actions/types';
 
 // workers
 function* addEmployeeAsync(action) {
@@ -18,6 +19,9 @@ function* addEmployeeAsync(action) {
 
     const response = yield call(axios.post, postEmployee(), data);
     yield put({ type: actions.EMPLOYEE_ADD_SUCCESS, response });
+
+    // update list of employees with added employee and possible new department
+    yield put({ type: EMPLOYEES_SET, page: 1, pageSize: 100000 });
   } catch (e) {
     console.log('employee_add failed');
     yield put({ type: actions.EMPLOYEE_ADD_FAIL, message: e.message });

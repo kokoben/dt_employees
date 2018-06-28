@@ -9,3 +9,8 @@ export const updateFields = fields => ({
   type: actions.FIELDS_UPDATE,
   fields,
 });
+
+export const updateSubmitStatus = submitStatus => ({
+  type: actions.SUBMIT_UPDATE,
+  submitStatus,
+});

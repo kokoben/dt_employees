@@ -13,6 +13,16 @@ export const fields = (state = null, action) => {
   }
 };
 
+export const submitStatus = (state = false, action) => {
+  switch (action.type) {
+    case actions.SUBMIT_UPDATE:
+      return action.submitStatus;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   fields,
+  submitStatus,
 });

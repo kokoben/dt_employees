@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
+import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { addEmployee, updateFields } from '../actions';
-import { setTab } from '../../app/actions';
+import { addEmployee, updateFields, updateSubmitStatus } from '../actions';
 
 const FormItem = Form.Item;
 
@@ -53,8 +53,10 @@ const EmployeeForm = Form.create({
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('values: ', values);
         props.onGoodSubmit(values);
+        message.success('Employee successfully added!');
+        props.statusHandler();
+        props.redirectHandler(true);
       }
     });
   };
@@ -82,7 +84,7 @@ const EmployeeForm = Form.create({
         {getFieldDecorator('lastName', {
           rules: [
              { required: true, message: 'Please enter employee\'s last name.', whitespace: true },
-             { pattern: /^[a-z]+$/i, message: 'May only contain letters and no spaces.' },
+             { pattern: /^[a-z ]+$/i, message: 'May only contain letters.' },
           ],
         })(<Input />)}
       </FormItem>
@@ -130,13 +132,29 @@ const EmployeeForm = Form.create({
 });
 
 class WrappedEmployeeForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      success: false,
+    };
+
+    this.changeSubmitStatus = this.changeSubmitStatus.bind(this);
+  }
+
+  changeSubmitStatus() {
+    this.setState({ success: true });
+  }
   render() {
+    if (this.state.success) {
+      return <Redirect to="/" />;
+    }
     return (
       <div style={{ width: '50%' }}>
         <Link to="/">
           <Button
             style={{ float: 'left', margin: '10px' }}
-            onClick={() => this.props.setTab('/')}
+            tabIndex="0"
             size="small"
             type="primary"
             icon="left"
@@ -146,6 +164,9 @@ class WrappedEmployeeForm extends Component {
         </Link>
         <h1 style={{ clear: 'left' }}>Add Employee</h1>
         <EmployeeForm
+          submitStatus={this.state.success}
+          statusHandler={this.changeSubmitStatus}
+          redirectHandler={this.props.updateSubmitStatus}
           {...this.props.fields}
           onChange={this.props.updateFields}
           onGoodSubmit={this.props.addEmployee}
@@ -159,8 +180,8 @@ class WrappedEmployeeForm extends Component {
 WrappedEmployeeForm.propTypes = {
   addEmployee: PropTypes.func.isRequired,
   updateFields: PropTypes.func.isRequired,
-  setTab: PropTypes.func.isRequired,
   fields: PropTypes.object,
+  updateSubmitStatus: PropTypes.func.isRequired,
 };
 /* eslint-enable */
 
@@ -173,7 +194,7 @@ const mapDispatchToProps = dispatch => (
   bindActionCreators({
     updateFields,
     addEmployee,
-    setTab,
+    updateSubmitStatus,
   }, dispatch)
 );
 

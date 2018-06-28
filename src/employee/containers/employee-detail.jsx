@@ -100,8 +100,6 @@ class EmployeeDetail extends Component {
   }
 
   render() {
-    console.log('cursor pos: ', this.props.cursor);
-    console.log('currentPage: ', this.props.currentPage);
     const { back, prev, next } = this.state;
     const prevEmployeeId = parseInt(this.props.match.params.id) - 1;
     const nextEmployeeId = parseInt(this.props.match.params.id) + 1;

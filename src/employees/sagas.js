@@ -4,7 +4,7 @@ import * as actions from './actions/types';
 import { getEmployees } from './api-calls';
 
 // workers
-function* setEmployeesAsync(action) {
+export function* setEmployeesAsync(action) {
   try {
     // get entire list of employees for pagination.
     let list = [];

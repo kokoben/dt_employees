@@ -7,6 +7,7 @@ import { Redirect } from 'react-router';
 import { List, Spin } from 'antd';
 import Filter from './filter';
 import { setEmployees, setCursor, setCurrentPage } from '../actions';
+import { updateSubmitStatus } from '../../employee-form/actions';
 import FilteredEmployeesSelector from '../selectors/filtered-employees';
 
 class EmployeesList extends Component {
@@ -29,8 +30,10 @@ class EmployeesList extends Component {
     if (this.listSection) {
       this.listSection.focus();
     }
-    if (!this.props.employees) this.props.setEmployees(1, 100000);
-    if (this.props.cursor !== 0 && this.props.cursor !== 1 && this.employeeRow) {
+    if (!this.props.employees) {
+      this.props.setEmployees(1, 100000);
+    }
+    if (this.props.cursor !== 0 && this.employeeRow) {
       // when the user returns from employee detail view, scroll to focused employee row
       this.employeeRow.scrollIntoView();
       window.scrollBy(0, -50);
@@ -38,6 +41,7 @@ class EmployeesList extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('updated component');
     if (this.listSection) {
       this.listSection.focus();
     }
@@ -106,6 +110,13 @@ class EmployeesList extends Component {
   }
 
   render() {
+    console.log('rendering');
+    /* if user added a new employee and has just been kicked back to employees list,
+    update the list. */
+    if (this.props.submitStatus) {
+      console.log("submit status changed, updating list in render");
+      this.props.updateSubmitStatus(false);
+    }
     const { id, redirect } = this.state;
     const { cursor } = this.props;
 
@@ -188,6 +199,8 @@ EmployeesList.propTypes = {
   setCursor: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   filteredEmployees: PropTypes.array,
+  updateSubmitStatus: PropTypes.func.isRequired,
+  submitStatus: PropTypes.bool.isRequired,
 };
 /* eslint-enable */
 
@@ -195,6 +208,7 @@ const mapStateToProps = state => ({
   employees: state.employees.employees,
   cursor: state.employees.cursor,
   currentPage: state.employees.currentPage,
+  submitStatus: state.form.submitStatus,
   filteredEmployees: FilteredEmployeesSelector(state),
 });
 
@@ -203,6 +217,7 @@ const mapDispatchToProps = dispatch => (
     setEmployees,
     setCursor,
     setCurrentPage,
+    updateSubmitStatus,
   }, dispatch)
 );
 
