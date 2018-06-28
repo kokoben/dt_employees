@@ -17,7 +17,7 @@ const formItemLayout = {
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 18 },
+    sm: { span: 12 },
   },
 };
 
@@ -67,7 +67,7 @@ const EmployeeForm = Form.create({
 
   return (
     <Form
-      style={{ marginLeft: '10px' }}
+      style={{ marginLeft: '10px', marginRight: '10px' }}
       onSubmit={handleSubmit}
     >
       <FormItem
@@ -154,7 +154,7 @@ class WrappedEmployeeForm extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <div style={{ width: '50%' }}>
+      <div>
         <Link to="/">
           <Button
             style={{ float: 'left', margin: '10px' }}
@@ -166,16 +166,18 @@ class WrappedEmployeeForm extends Component {
             Back
           </Button>
         </Link>
-        <h1 style={{ clear: 'left' }}>Add Employee</h1>
-        <EmployeeForm
-          pageChanger={this.props.setCurrentPage}
-          cursorChanger={this.props.setCursor}
-          submitStatus={this.state.success}
-          statusHandler={this.changeSubmitStatus}
-          {...this.props.fields}
-          onChange={this.props.updateFields}
-          onGoodSubmit={this.props.addEmployee}
-        />
+        <div className="employee-form">
+          <h1 style={{ clear: 'left' }}>Add Employee</h1>
+          <EmployeeForm
+            pageChanger={this.props.setCurrentPage}
+            cursorChanger={this.props.setCursor}
+            submitStatus={this.state.success}
+            statusHandler={this.changeSubmitStatus}
+            {...this.props.fields}
+            onChange={this.props.updateFields}
+            onGoodSubmit={this.props.addEmployee}
+          />
+        </div>
       </div>
     );
   }

@@ -6,6 +6,7 @@ module.exports = function override(config, env) {
   config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config); // change importing css to less
   config = rewireLess.withLoaderOptions({
     modifyVars: {
+      '@layout-header-height': '56px',
     },
 })(config, env);
   return config;

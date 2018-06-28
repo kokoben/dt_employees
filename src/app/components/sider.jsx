@@ -13,7 +13,6 @@ const FullMenu = withRouter((props) => {
       style={{
         overflow: 'auto', height: '100vh', position: 'fixed', left: 0,
       }}
-      className="menu-full"
     >
       <Menu
         theme="dark"
