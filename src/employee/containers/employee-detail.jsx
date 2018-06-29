@@ -185,7 +185,7 @@ class EmployeeDetail extends Component {
           <Button
             onClick={this.handlePrevClick}
             type="primary"
-            icon="left"
+            icon="up"
             size="small"
             style={{ float: 'left', margin: '10px' }}
           >
@@ -199,7 +199,7 @@ class EmployeeDetail extends Component {
             size="small"
             style={{ float: 'right', margin: '10px' }}
           >
-            Next <Icon type="right" />
+            Next <Icon type="down" />
           </Button>
         </Link>
       </div>

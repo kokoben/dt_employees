@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Select } from 'antd';
-import { setFilter } from '../actions';
+import { setFilter, setCursor, setCurrentPage } from '../actions';
 
 const Option = Select.Option;
 
@@ -15,6 +15,8 @@ class Filter extends Component {
 
   handleChange(value) {
     this.props.setFilter(value);
+    this.props.setCursor(0);
+    this.props.setCurrentPage(1);
   }
 
   render() {
@@ -42,6 +44,8 @@ Filter.propTypes = {
   filter: PropTypes.string.isRequired,
   departments: PropTypes.array,
   setFilter: PropTypes.func.isRequired,
+  setCursor: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
 };
 /* eslint-enable */
 
@@ -53,6 +57,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     setFilter,
+    setCursor,
+    setCurrentPage,
   }, dispatch)
 );
 
