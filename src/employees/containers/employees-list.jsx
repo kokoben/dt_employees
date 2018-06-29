@@ -28,7 +28,6 @@ class EmployeesList extends Component {
   componentDidMount() {
     if (this.listSection) {
       this.listSection.focus();
-      window.scrollTo(0, 0);
     }
     if (!this.props.employees) {
       this.props.setEmployees(1, 100000);
