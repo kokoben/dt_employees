@@ -34,7 +34,7 @@ const configureStore = () => {
   );
 
   store.subscribe(throttle(() => {
-    saveState();
+    saveState(store.getState());
   }, 1000));
 
   /* eslint-enable */
