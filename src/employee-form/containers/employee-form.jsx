@@ -135,7 +135,7 @@ const EmployeeForm = Form.create({
   );
 });
 
-class WrappedEmployeeForm extends Component {
+export class WrappedEmployeeForm extends Component {
   constructor(props) {
     super(props);
 

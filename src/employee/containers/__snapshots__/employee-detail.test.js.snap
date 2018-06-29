@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  onKeyDown={[Function]}
+  tabIndex="0"
+>
+  <Link
+    replace={false}
+    to="/"
+  >
+    <Button
+      ghost={false}
+      icon="left"
+      loading={false}
+      prefixCls="ant-btn"
+      size="small"
+      style={
+        Object {
+          "float": "left",
+          "margin": "10px",
+        }
+      }
+      type="primary"
+    >
+      Back
+    </Button>
+  </Link>
+  <h1
+    style={
+      Object {
+        "clear": "left",
+      }
+    }
+  >
+    Employee Information
+  </h1>
+  <List
+    bordered={false}
+    dataSource={
+      Array [
+        Object {
+          "content": "AARON, JEFFERY M",
+          "title": "Name:",
+        },
+        Object {
+          "content": 2,
+          "title": "Employee ID:",
+        },
+        Object {
+          "content": "POLICE OFFICER",
+          "title": "Job Title:",
+        },
+        Object {
+          "content": "$84450.00",
+          "title": "Annual Salary:",
+        },
+        Object {
+          "content": "POLICE",
+          "title": "Department:",
+        },
+      ]
+    }
+    loading={false}
+    pagination={false}
+    prefixCls="ant-list"
+    renderItem={[Function]}
+    split={true}
+  />
+  <Link
+    replace={false}
+    to="/employee/2"
+  >
+    <Button
+      ghost={false}
+      icon="up"
+      loading={false}
+      onClick={[Function]}
+      prefixCls="ant-btn"
+      size="small"
+      style={
+        Object {
+          "float": "left",
+          "margin": "10px",
+        }
+      }
+      type="primary"
+    >
+      Previous
+    </Button>
+  </Link>
+  <Link
+    replace={false}
+    to="/employee/2"
+  >
+    <Button
+      ghost={false}
+      loading={false}
+      onClick={[Function]}
+      prefixCls="ant-btn"
+      size="small"
+      style={
+        Object {
+          "float": "right",
+          "margin": "10px",
+        }
+      }
+      type="primary"
+    >
+      Next 
+      <Icon
+        type="down"
+      />
+    </Button>
+  </Link>
+</div>
+`;

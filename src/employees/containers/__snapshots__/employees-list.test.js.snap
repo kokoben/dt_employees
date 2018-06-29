@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <h1>
+    City of Chicago Employee Directory
+  </h1>
+  <Spin
+    prefixCls="ant-spin"
+    size="large"
+    spinning={true}
+    style={
+      Object {
+        "marginTop": "20px",
+      }
+    }
+    tip="Loading employees..."
+    wrapperClassName=""
+  />
+</div>
+`;

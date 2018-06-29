@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <Link
+    replace={false}
+    to="/"
+  >
+    <Button
+      ghost={false}
+      icon="left"
+      loading={false}
+      prefixCls="ant-btn"
+      size="small"
+      style={
+        Object {
+          "float": "left",
+          "margin": "10px",
+        }
+      }
+      tabIndex="0"
+      type="primary"
+    >
+      Back
+    </Button>
+  </Link>
+  <div
+    className="employee-form"
+  >
+    <h1
+      style={
+        Object {
+          "clear": "left",
+        }
+      }
+    >
+      Add Employee
+    </h1>
+    <Form(WrappedComponent)
+      cursorChanger={[Function]}
+      onChange={[Function]}
+      onGoodSubmit={[Function]}
+      pageChanger={[Function]}
+      statusHandler={[Function]}
+      submitStatus={false}
+    />
+  </div>
+</div>
+`;

@@ -1,10 +1,6 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
-import { slide as Slide } from 'react-burger-menu';
-
-let href = window.location.href.split('/');
-href = href[3];
 
 const FullMenu = withRouter((props) => {
   const { location } = props;

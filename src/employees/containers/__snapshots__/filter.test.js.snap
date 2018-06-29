@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  Department:
+  <Select
+    choiceTransitionName="zoom"
+    defaultValue=""
+    onChange={[Function]}
+    prefixCls="ant-select"
+    showSearch={false}
+    style={
+      Object {
+        "margin": "10px",
+        "width": "240px",
+      }
+    }
+    transitionName="slide-up"
+  />
+</div>
+`;

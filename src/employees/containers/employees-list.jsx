@@ -9,7 +9,7 @@ import Filter from './filter';
 import { setEmployees, setCursor, setCurrentPage } from '../actions';
 import FilteredEmployeesSelector from '../selectors/filtered-employees';
 
-class EmployeesList extends Component {
+export class EmployeesList extends Component {
   constructor(props) {
     super(props);
 

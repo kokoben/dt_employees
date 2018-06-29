@@ -9,7 +9,7 @@ import { setEmployee } from '../actions';
 import { setCursor, setCurrentPage } from '../../employees/actions';
 import FilteredEmployeesSelector from '../../employees/selectors/filtered-employees';
 
-class EmployeeDetail extends Component {
+export class EmployeeDetail extends Component {
   constructor(props) {
     super(props);
 
