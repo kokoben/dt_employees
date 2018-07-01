@@ -112,7 +112,7 @@ const EmployeeForm = Form.create({
           { required: true, message: 'Please enter employee\'s salary.', whitespace: true },
           {
             pattern: /^[0-9]+(\.[0-9][0-9])?$/,
-            message: 'Invalid amount. Must in the format: (dollar amount).(cents) Example: 19899.52',
+            message: 'Invalid amount. Must be in the format: (dollar amount).(cents) Example: 19899.52',
           },
           ],
         })(<Input prefix="$" />)}
