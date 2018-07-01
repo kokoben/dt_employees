@@ -36,7 +36,6 @@ const tailFormItemLayout = {
 
 const EmployeeForm = Form.create({
   onFieldsChange(props, changedFields) {
-    console.log('changedFields: ', changedFields);
     props.onChange(changedFields);
   },
   mapPropsToFields(props) {
