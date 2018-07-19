@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { addEmployee, updateFields } from '../actions';
@@ -55,7 +55,6 @@ const EmployeeForm = Form.create({
     props.form.validateFields((err, values) => {
       if (!err) {
         props.onGoodSubmit(values);
-        message.success('Employee successfully added!', 5);
         props.statusHandler();
         props.pageChanger(1);
         props.cursorChanger(0);
